@@ -1,52 +1,26 @@
-// @ts-nocheck
-const today = new Date();
-const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-document.getElementById("today").innerText = today.toLocaleDateString('en-US', options);
-
-document.getElementById('body').style.backgroundImage="url(images/morning-03.png)";
-
-
-// Perform web search 
-function handleSearchKeyPress(event) {
-    if (event.key === "Enter") {
-        const search = document.getElementById('search');
-        console.log({search});
-        let text = search.value;
-        if(!text) { return; }
-        console.log('current search: ', text);
-        text = text.trim();
-        if(!text) { return; }
-        text = text.replace(/ +/g, '+');
-        console.log('sanitized search: ', text);
-        window.open(`http://google.com/search?q=${text}`, '_blank');
-        search.value = '';
-    }
-}
-
-
 /**
  * Get the list of IDs for new stories from Hacker News and then 
  * call a function to retrieve the actual story data and display it
  */
-const currentsUrl = 'https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty';
-let newStories;
-fetch(currentsUrl)
-.then(response => response.json())
-.then(storyIds => {
-    newStories = storyIds;
-    loadNewStories(0, 16);
-})
-.catch(error => {
-    console.log('Error Getting Story Ids');
-    console.log(error);
-});
+ const currentsUrl = 'https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty';
+ let newStories;
+ fetch(currentsUrl)
+ .then(response => response.json())
+ .then(storyIds => {
+     newStories = storyIds;
+     loadNewStories(0, 16);
+ })
+ .catch(error => {
+     console.log('Error Getting Story Ids');
+     console.log(error);
+ });
 
 /**
  * Get a list of stories from Hacker News and display them as links on the page.
  * @param {number} start - The index of the first story to retrieve 
  * @param {number} end -  The index of the last story to retrieve
  */
-function loadNewStories(start, end) {
+ function loadNewStories(start, end) {
     let requests = [];
     while(start <= end) {
         if(newStories[start]) {
@@ -84,4 +58,3 @@ function loadNewStories(start, end) {
         })
     }
 }
-

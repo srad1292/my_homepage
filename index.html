@@ -23,30 +23,18 @@
             </div>
     
             <div id="todo-list-container" class="content-column">
-                <ul id="todo-list">
-                    <li>I am item one</li>
-                    <li>I am item two</li>
-                    <li>I am item three and I am really long man. Like really really long.</li>
-                    <li>I am item four</li>
-                    <li>I am item one</li>
-                    <li>I am item two</li>
-                    <li>I am item three and I am really long man. Like really really long.</li>
-                    <li>I am item four</li>
-                    <li>I am item one</li>
-                    <li>I am item two</li>
-                    <li>I am item three and I am really long man. Like really really long.</li>
-                    <li>I am item four</li>
-                    <li>I am item one</li>
-                    <li>I am item two</li>
-                    <li>I am item three and I am really long man. Like really really long.</li>
-                    <li>I am item four</li>
-                </ul>
+                <div id="add-item-container">
+                    <input id="todo-input" type="text" placeholder="Add Item..." onkeypress="handleAddItemKeyPress(event)">
+                </div>
+                <ul id="todo-list"></ul>
             </div>
 
         </div>
 
     </div>
 
-    <script src="./index.js"></script>
+    <script src="./scripts/index.js"></script>
+    <script src="./scripts/news.js"></script>
+    <script src="./scripts/todo.js"></script>
 </body>
 </html>
