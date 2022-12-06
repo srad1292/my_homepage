@@ -1,49 +1,40 @@
+// @ts-nocheck
 const today = new Date();
 const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 document.getElementById("today").innerText = today.toLocaleDateString('en-US', options);
 
-/**
- * Get cat facts and choose which one to display based on the day of the week
- */
-fetch("https://cat-fact.herokuapp.com/facts")
-.then(response => response.json())
-.then(catFacts => {
-    let date = new Date().getDate();
-    let catFact = catFacts[date] ? catFacts[date].text : catFacts[0].text;
-    document.getElementById("cat-fact").innerText = catFact ? catFact : "No Fact Today.";
-})
-.catch(error => {
-    console.log("Error retrieving cat fact.");
-    console.log(error);
-    document.getElementById("cat-fact").innerText = "No Fact Today.";
-});
+document.getElementById('body').style.backgroundImage="url(images/morning-03.png)";
 
-/**
- * Get a random programming quote to display
- */
-fetch("http://quotes.stormconsultancy.co.uk/random.json")
-.then(response => response.json())
-.then(programmingQuote => {
-    console.log({programmingQuote});
-    document.getElementById("programming-quote").innerText = programmingQuote ? programmingQuote.quote || "No Fact Today." : "No Fact Today.";
-})
-.catch(error => {
-    console.log("Error retrieving programming quote.");
-    console.log(error);
-    document.getElementById("programming-quote").innerText = "No Fact Today.";
-});
+
+// Perform web search 
+function handleSearchKeyPress(event) {
+    if (event.key === "Enter") {
+        const search = document.getElementById('search');
+        console.log({search});
+        let text = search.value;
+        if(!text) { return; }
+        console.log('current search: ', text);
+        text = text.trim();
+        if(!text) { return; }
+        text = text.replace(/ +/g, '+');
+        console.log('sanitized search: ', text);
+        window.open(`http://google.com/search?q=${text}`, '_blank');
+        search.value = '';
+    }
+}
+
 
 /**
  * Get the list of IDs for new stories from Hacker News and then 
  * call a function to retrieve the actual story data and display it
  */
-const currentsUrl = 'https://hacker-news.firebaseio.com/v0/newstories.json?print=pretty';
+const currentsUrl = 'https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty';
 let newStories;
 fetch(currentsUrl)
 .then(response => response.json())
 .then(storyIds => {
     newStories = storyIds;
-    loadNewStories(0, 5);
+    loadNewStories(0, 16);
 })
 .catch(error => {
     console.log('Error Getting Story Ids');
@@ -74,11 +65,14 @@ function loadNewStories(start, end) {
             let storyList = document.getElementById("tech-stories-list");
             stories.forEach(story => {
                 if(story && story.url) {
+                    // https://news.ycombinator.com/item?id=29414763
                     let link = document.createElement("a");
                     link.appendChild(document.createTextNode(story.title));
-                    link.href = story.url;
+                    link.href = `https://news.ycombinator.com/item?id=${story.id}`;
                     link.target = "blank";
-                    storyList.appendChild(link);
+                    let item = document.createElement("li");
+                    item.appendChild(link);
+                    storyList.appendChild(item);
                 }
             });
         })
