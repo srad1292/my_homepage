@@ -1,16 +1,17 @@
 div::-webkit-scrollbar {
-    width: 8px;
+    width: 9px;
     height: 16px;
 }
 
 div::-webkit-scrollbar-thumb {
-    background: #434343;
+    background: linear-gradient(60deg,#3291a8,#c897de,75%,#ede885);
     border-radius: 16px;
     box-shadow: inset 2px 2px 2px hsla(0,0%,100%,.25),inset -2px -2px 2px rgba(0,0,0,.25);
 }
 
 div::-webkit-scrollbar-track {
     /* background: linear-gradient(90deg,#434343,#434343 1px,#111 0,#111); */
+    border-radius: 16px;
     background-color: rgba(255,255,255,0);
 }
 
@@ -23,6 +24,11 @@ body {
 
 a {
     text-decoration: none;
+    color: black;
+}
+
+a:hover {
+    color: blue;
 }
 
 ul {
@@ -31,6 +37,13 @@ ul {
 
 li {
     margin-bottom: 0.5rem;
+}
+
+input {
+    border-radius: 6px;
+    padding: 6px 10px;
+    background-color: rgba(255,255,255,0.7);
+    border-color: rgba(255,255,255,0.7);
 }
 
 .clickable {
@@ -55,6 +68,7 @@ li {
     display: flex;
     flex-direction: row;
     column-gap: 2.5rem;
+    padding: 16px;
 }
 
 .content-column {
@@ -96,10 +110,6 @@ li {
 
 #search {
     width: 300px;
-    border-radius: 6px;
-    padding: 6px 10px;
-    background-color: rgba(255,255,255,0.7);
-    border-color: rgba(255,255,255,0.7);
 }
 
 #search:focus {
@@ -111,6 +121,18 @@ li {
     margin-bottom: 16px;
 }
 
+
+@media(max-width: 1400px) {
+    #content-container {
+        max-width: 900px;
+    }
+}
+
+@media(max-height: 850px) {
+    .content-column {
+        max-height: 45vh;
+    }
+}
 
 
 
