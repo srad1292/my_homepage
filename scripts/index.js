@@ -1,5 +1,13 @@
 // @ts-nocheck
 const today = new Date();
+
+// const isDark = today.getHours() <= 7 || today.getHours() >= 19;
+const isDark = false;
+if(isDark) {
+    const body = document.getElementById('body');
+    body.classList.add('dark');
+}
+
 const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 document.getElementById("today").innerText = today.toLocaleDateString('en-US', options);
 
