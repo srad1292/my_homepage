@@ -1,6 +1,9 @@
 // @ts-nocheck
-
+const TODO_KEY = 'todos';
 let todos = [];
+getFromLocalStorage();
+console.log(todos);
+buildTodoList();
 
 
 function handleAddItemKeyPress(event) {
@@ -20,12 +23,14 @@ function handleAddItemKeyPress(event) {
 }
 
 function buildTodoList() {
+    updateLocalStorage();
     let todoList = document.getElementById("todo-list");
 
     clearCurrentList(todoList);
 
     todos.forEach(todo => {
         let item = document.createElement("li");
+        if(todo.completed) { item.classList.add('completed'); }
 
         let button = item.appendChild(document.createElement('button'));
         button.innerHTML = "X";
@@ -47,14 +52,9 @@ function buildTodoList() {
 
 function toggleItemState(item, liNode) {
     let todoItem = todos.find(todo => todo.value === item.value);
-    console.log("Found todo item");
-    console.log(todoItem);
     todoItem.completed = !todoItem.completed;
-    console.log("Classes");
-    console.log(liNode.classList);
     liNode.classList.toggle('completed');
-    console.log("Classes");
-    console.log(liNode.classList);
+    updateLocalStorage();
 }
 
 function deleteItem(item) {
@@ -66,5 +66,19 @@ function deleteItem(item) {
 function clearCurrentList(todoList) {
     while (todoList.firstChild) {
         todoList.removeChild(todoList.firstChild);
+    }
+}
+
+function updateLocalStorage() {
+    const stringified = JSON.stringify(todos);
+    localStorage.setItem(TODO_KEY, stringified);
+}
+
+function getFromLocalStorage() {
+    let stored = localStorage.getItem(TODO_KEY);
+    if(!!stored && stored !== '') {
+        todos = JSON.parse(stored);
+    } else {
+        todos = [];
     }
 }
