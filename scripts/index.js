@@ -1,17 +1,25 @@
 // @ts-nocheck
 const today = new Date();
+const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+const isDark = today.getHours() <= 7 || today.getHours() >= 19;
+const body = document.getElementById('body');
 
-// const isDark = today.getHours() <= 7 || today.getHours() >= 19;
-const isDark = false;
-if(isDark) {
-    const body = document.getElementById('body');
-    body.classList.add('dark');
+setupHomepage();
+
+function setupHomepage() {
+    selectBackgroundImage();
+    document.getElementById("today").innerText = today.toLocaleDateString('en-US', options);
+    if(isDark) { body.classList.add('dark'); }
 }
 
-const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-document.getElementById("today").innerText = today.toLocaleDateString('en-US', options);
-
-document.getElementById('body').style.backgroundImage="url(images/morning-03.png)";
+function selectBackgroundImage() {
+    const night = ["twilight-01.png", "twilight-02.png", "twilight-03.png"];
+    const day = ["morning-01.png", "morning-02.png", "morning-03.png"];
+    
+    let index = Math.floor(Math.random()*night.length);
+    fileName = isDark ? night[index] : day[index];
+    body.style.backgroundImage=`url(images/${fileName})`;
+}
 
 
 // Perform web search 
